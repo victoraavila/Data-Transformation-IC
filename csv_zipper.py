@@ -11,4 +11,6 @@ def zip_this_folder(path = ""):
         if extension == ".csv":
             csv_files.append(file)
 
-    print(csv_files)
+    with zipfile.ZipFile("quadros.zip", "w") as zipper:
+        for file in csv_files:
+            zipper.write(file, compress_type = zipfile.ZIP_DEFLATED)
