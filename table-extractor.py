@@ -3,6 +3,7 @@ from tabula import read_pdf
 import pandas as pd
 import numpy as np
 import re
+from zipfile import ZipFile
 
 # 1. Reading desired tables from .pdf and saving them as Pandas Dataframes
 pdf_path = os.path.join(os.path.abspath("src"), "Componente Organizacional.pdf")
@@ -45,3 +46,8 @@ for i in range(5):
 
 print(Q30, "\n")
 
+# 3. Saving Quadro 30 as a .csv file
+Q30_filename = "quadro30"
+Q30.to_csv(path_or_buf = Q30_filename + ".csv")
+
+#ZipFile(Q30_filename + ".zip", "w").write(Q30_filename + ".csv")
