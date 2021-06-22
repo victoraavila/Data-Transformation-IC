@@ -33,10 +33,15 @@ for i in range(6):
         if count > 2:
             for iter in range(count - 1, 1, -1):
                 df[0].iloc[i][j].pop(iter)
-                
+
+df[0] = pd.DataFrame(df[0]["Tabela de Tipo do Demandante"].to_list(), columns = subheader)
 print(df[0], "\n")
 
-Q30 = pd.DataFrame(np.random.randn(5, 2), columns = Q30_header)
-#df[0][["Código", "Descrição da Categoria"]] = df[0]["Tabela de Tipo do Demandante"].str.split(" ", expand = True)
+## Creating a new empty Dataframe to fill it with df[0] Dataframe
+Q30 = pd.DataFrame(np.empty((5, 2), dtype = str), columns = Q30_header)
+for i in range(5):
+    for j in range(2):
+        Q30.iloc[i][j] = df[0].iloc[i + 1][j]
+
 print(Q30, "\n")
 
