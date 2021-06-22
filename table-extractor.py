@@ -3,8 +3,9 @@ from tabula import read_pdf
 import pandas as pd
 import numpy as np
 import re
-from zipfile import ZipFile
+from csv_zipper import zip_this_folder
 
+# 0. Setting Pandas printing options
 pd.options.display.max_colwidth = 100
 pd.options.display.max_rows = 140
 
@@ -58,8 +59,6 @@ Q30.to_csv(path_or_buf = Q30_filename + ".csv")
 header = [df[1].columns.values[1], df[1].columns.values[1]]
 Q31_header = pd.MultiIndex.from_tuples(list(zip(header, subheader)))
 
-print(df[1], "\n")
-
 ## Creating auxiliar matrix for df[2]
 aux = pd.DataFrame(np.empty((27, 2), dtype = str), columns = Q31_header)
 for i in range(27):
@@ -70,7 +69,6 @@ for i in range(27):
             aux.iloc[i][j] = df[2].iloc[i-1][j]
 
 df[2] = aux
-print(df[2], "\n")
 
 ## Creating auxiliar matrix for df[3]
 aux = pd.DataFrame(np.empty((27, 2), dtype = str), columns = Q31_header)
@@ -82,7 +80,6 @@ for i in range(27):
             aux.iloc[i][j] = df[3].iloc[i-1][j]
 
 df[3] = aux
-print(df[3], "\n")
 
 ## Creating auxiliar matrix for df[4]
 aux = pd.DataFrame(np.empty((26, 2), dtype = str), columns = Q31_header)
@@ -94,7 +91,6 @@ for i in range(26):
             aux.iloc[i][j] = df[4].iloc[i-1][j]
 
 df[4] = aux
-print(df[4], "\n")
 
 ## Creating auxiliar matrix for df[5]
 aux = pd.DataFrame(np.empty((25, 2), dtype = str), columns = Q31_header)
@@ -106,7 +102,6 @@ for i in range(25):
             aux.iloc[i][j] = df[5].iloc[i-1][j]
 
 df[5] = aux
-print(df[5], "\n")
 
 ## Creating auxiliar matrix for df[6]
 aux = pd.DataFrame(np.empty((23, 2), dtype = str), columns = Q31_header)
@@ -118,7 +113,6 @@ for i in range(23):
             aux.iloc[i][j] = df[6].iloc[i-1][j]
 
 df[6] = aux
-print(df[6], "\n")
 
 ## Creating a new empty Dataframe and filling it with df[1:6] Dataframes
 Q31 = pd.DataFrame(np.empty((131, 2), dtype = str), columns = Q31_header)
@@ -152,5 +146,47 @@ print(Q31, "\n")
 # 5. Saving Quadro 31 as a .csv file
 Q31_filename = "quadro31"
 Q31.to_csv(path_or_buf = Q31_filename + ".csv")
+
+# 6. Organizing Quadro 32
+## Creating MultiIndex
+header = [df[7].columns.values[0], df[7].columns.values[0]]
+subheader = ["Código", "Descrição da Categoria"]
+Q32_header = pd.MultiIndex.from_tuples(list(zip(header, subheader)))
+
+## Dividing column with one string into column with list of strings 
+for i in range(4):
+        df[7].iloc[i][0] = re.split(r' ', str(df[7].iloc[i][0]))
+
+for i in range(4):
+    for j in range(1):
+        count = 0
+        mylist = []
+        for item in df[7].iloc[i][j]:
+            if count >= 1:
+                mylist.append(item)
+            count += 1
+        df[7].iloc[i][j][1] = " ".join(mylist)
+
+        if count > 2:
+            for iter in range(count - 1, 1, -1):
+                df[7].iloc[i][j].pop(iter)
+
+## Dividing column with list of two strings into two columns
+df[7] = pd.DataFrame(df[7]["Tabela de Tipo de Solicitação"].to_list(), columns = subheader)
+
+## Creating a new empty Dataframe to fill it with df[0] Dataframe
+Q32 = pd.DataFrame(np.empty((3, 2), dtype = str), columns = Q32_header)
+for i in range(3):
+    for j in range(2):
+        Q32.iloc[i][j] = df[7].iloc[i + 1][j]
+
+print(Q32, "\n")
+
+# 7. Saving Quadro 32 as a .csv file
+Q32_filename = "quadro32"
+Q32.to_csv(path_or_buf = Q32_filename + ".csv")
+
+# 8. Zipping all .csv files
+zip_this_folder(path = os.path.abspath(os.getcwd()))
 
 #ZipFile(Q30_filename + ".zip", "w").write(Q30_filename + ".csv")
