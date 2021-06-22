@@ -5,6 +5,9 @@ import numpy as np
 import re
 from zipfile import ZipFile
 
+pd.options.display.max_colwidth = 100
+pd.options.display.max_rows = 140
+
 # 1. Reading desired tables from .pdf and saving them as Pandas Dataframes
 pdf_path = os.path.join(os.path.abspath("src"), "Componente Organizacional.pdf")
 pages = [79, 80, 81, 82, 83, 84, 85]
@@ -35,8 +38,8 @@ for i in range(6):
             for iter in range(count - 1, 1, -1):
                 df[0].iloc[i][j].pop(iter)
 
+## Dividing column with list of two strings into two columns
 df[0] = pd.DataFrame(df[0]["Tabela de Tipo do Demandante"].to_list(), columns = subheader)
-print(df[0], "\n")
 
 ## Creating a new empty Dataframe to fill it with df[0] Dataframe
 Q30 = pd.DataFrame(np.empty((5, 2), dtype = str), columns = Q30_header)
@@ -49,5 +52,105 @@ print(Q30, "\n")
 # 3. Saving Quadro 30 as a .csv file
 Q30_filename = "quadro30"
 Q30.to_csv(path_or_buf = Q30_filename + ".csv")
+
+# 4. Organizing Quadro 31
+## Creating MultiIndex
+header = [df[1].columns.values[1], df[1].columns.values[1]]
+Q31_header = pd.MultiIndex.from_tuples(list(zip(header, subheader)))
+
+print(df[1], "\n")
+
+## Creating auxiliar matrix for df[2]
+aux = pd.DataFrame(np.empty((27, 2), dtype = str), columns = Q31_header)
+for i in range(27):
+    for j in range(2):
+        if (i == 0):
+            aux.iloc[0][j] = df[2].columns.values[j]
+        else:
+            aux.iloc[i][j] = df[2].iloc[i-1][j]
+
+df[2] = aux
+print(df[2], "\n")
+
+## Creating auxiliar matrix for df[3]
+aux = pd.DataFrame(np.empty((27, 2), dtype = str), columns = Q31_header)
+for i in range(27):
+    for j in range(2):
+        if (i == 0):
+            aux.iloc[0][j] = df[3].columns.values[j]
+        else:
+            aux.iloc[i][j] = df[3].iloc[i-1][j]
+
+df[3] = aux
+print(df[3], "\n")
+
+## Creating auxiliar matrix for df[4]
+aux = pd.DataFrame(np.empty((26, 2), dtype = str), columns = Q31_header)
+for i in range(26):
+    for j in range(2):
+        if (i == 0):
+            aux.iloc[0][j] = df[4].columns.values[j]
+        else:
+            aux.iloc[i][j] = df[4].iloc[i-1][j]
+
+df[4] = aux
+print(df[4], "\n")
+
+## Creating auxiliar matrix for df[5]
+aux = pd.DataFrame(np.empty((25, 2), dtype = str), columns = Q31_header)
+for i in range(25):
+    for j in range(2):
+        if (i == 0):
+            aux.iloc[0][j] = df[5].columns.values[j]
+        else:
+            aux.iloc[i][j] = df[5].iloc[i-1][j]
+
+df[5] = aux
+print(df[5], "\n")
+
+## Creating auxiliar matrix for df[6]
+aux = pd.DataFrame(np.empty((23, 2), dtype = str), columns = Q31_header)
+for i in range(23):
+    for j in range(2):
+        if (i == 0):
+            aux.iloc[0][j] = df[6].columns.values[j]
+        else:
+            aux.iloc[i][j] = df[6].iloc[i-1][j]
+
+df[6] = aux
+print(df[6], "\n")
+
+## Creating a new empty Dataframe and filling it with df[1:6] Dataframes
+Q31 = pd.DataFrame(np.empty((131, 2), dtype = str), columns = Q31_header)
+for i in range(131):
+    for j in range(2):
+        if (i <= 2):
+            Q31.iloc[i][j] = df[1].iloc[i + 1][j]
+        
+        elif (3 <= i) and (i <= 29):
+            Q31.iloc[i][j] = df[2].iloc[i - 3][j]
+
+        elif (30 <= i) and (i <= 56):
+            Q31.iloc[i][j] = df[3].iloc[i - 30][j]
+
+        elif (57 <= i) and (i <= 82):
+            Q31.iloc[i][j] = df[4].iloc[i - 57][j]
+
+        elif (83 <= i) and (i <= 107):
+            Q31.iloc[i][j] = df[5].iloc[i - 83][j]
+
+        elif (108 <= i) and (i <= 130):
+            Q31.iloc[i][j] = df[6].iloc[i - 108][j]
+
+## Replacing '\r' chars
+for i in range(131):
+    if ("\r" in Q31.iloc[i][1]):
+        Q31.iloc[i][1] = Q31.iloc[i][1].replace("\r", " ")
+
+print(Q31, "\n")
+
+# 5. Saving Quadro 31 as a .csv file
+Q31_filename = "quadro31"
+Q31.to_csv(path_or_buf = Q31_filename + ".csv")
 
 #ZipFile(Q30_filename + ".zip", "w").write(Q30_filename + ".csv")
