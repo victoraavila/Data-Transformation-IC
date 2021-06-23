@@ -61,60 +61,19 @@ header = [df[1].columns.values[1], df[1].columns.values[1]]
 Q31_header = pd.MultiIndex.from_tuples(list(zip(header, subheader)))
 
 ## Creating auxiliar matrix for df[2]
-aux = pd.DataFrame(np.empty((27, 2), dtype = str), columns = Q31_header)
-for i in range(27):
-    for j in range(2):
-        if (i == 0):
-            aux.iloc[0][j] = df[2].columns.values[j]
-        else:
-            aux.iloc[i][j] = df[2].iloc[i-1][j]
-
-df[2] = aux
-#df[2] = af.drag_header_to_first_line(df[2], 27, 2, Q31_header)
+df[2] = af.drag_header_to_first_line(df[2], 27, 2, Q31_header)
 
 ## Creating auxiliar matrix for df[3]
-aux = pd.DataFrame(np.empty((27, 2), dtype = str), columns = Q31_header)
-for i in range(27):
-    for j in range(2):
-        if (i == 0):
-            aux.iloc[0][j] = df[3].columns.values[j]
-        else:
-            aux.iloc[i][j] = df[3].iloc[i-1][j]
-
-df[3] = aux
+df[3] = af.drag_header_to_first_line(df[3], 27, 2, Q31_header)
 
 ## Creating auxiliar matrix for df[4]
-aux = pd.DataFrame(np.empty((26, 2), dtype = str), columns = Q31_header)
-for i in range(26):
-    for j in range(2):
-        if (i == 0):
-            aux.iloc[0][j] = df[4].columns.values[j]
-        else:
-            aux.iloc[i][j] = df[4].iloc[i-1][j]
-
-df[4] = aux
+df[4] = af.drag_header_to_first_line(df[4], 26, 2, Q31_header)
 
 ## Creating auxiliar matrix for df[5]
-aux = pd.DataFrame(np.empty((25, 2), dtype = str), columns = Q31_header)
-for i in range(25):
-    for j in range(2):
-        if (i == 0):
-            aux.iloc[0][j] = df[5].columns.values[j]
-        else:
-            aux.iloc[i][j] = df[5].iloc[i-1][j]
-
-df[5] = aux
+df[5] = af.drag_header_to_first_line(df[5], 25, 2, Q31_header)
 
 ## Creating auxiliar matrix for df[6]
-aux = pd.DataFrame(np.empty((23, 2), dtype = str), columns = Q31_header)
-for i in range(23):
-    for j in range(2):
-        if (i == 0):
-            aux.iloc[0][j] = df[6].columns.values[j]
-        else:
-            aux.iloc[i][j] = df[6].iloc[i-1][j]
-
-df[6] = aux
+df[6] = af.drag_header_to_first_line(df[6], 23, 2, Q31_header)
 
 ## Creating a new empty Dataframe and filling it with df[1:6] Dataframes
 Q31 = pd.DataFrame(np.empty((131, 2), dtype = str), columns = Q31_header)
