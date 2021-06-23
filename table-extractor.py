@@ -23,22 +23,7 @@ subheader = ["Código", "Descrição da Categoria"]
 Q30_header = pd.MultiIndex.from_tuples(list(zip(header, subheader)))
 
 ## Dividing column with one string into column with list of strings 
-for i in range(6):
-        df[0].iloc[i][0] = re.split(r' ', str(df[0].iloc[i][0]))
-
-for i in range(6):
-    for j in range(1):
-        count = 0
-        mylist = []
-        for item in df[0].iloc[i][j]:
-            if count >= 1:
-                mylist.append(item)
-            count += 1
-        df[0].iloc[i][j][1] = " ".join(mylist)
-
-        if count > 2:
-            for iter in range(count - 1, 1, -1):
-                df[0].iloc[i][j].pop(iter)
+df[0] = af.divide_string_column_into_list_column(df[0], 5)
 
 ## Dividing column with list of two strings into two columns
 df[0] = pd.DataFrame(df[0]["Tabela de Tipo do Demandante"].to_list(), columns = subheader)
@@ -115,22 +100,7 @@ subheader = ["Código", "Descrição da Categoria"]
 Q32_header = pd.MultiIndex.from_tuples(list(zip(header, subheader)))
 
 ## Dividing column with one string into column with list of strings 
-for i in range(4):
-        df[7].iloc[i][0] = re.split(r' ', str(df[7].iloc[i][0]))
-
-for i in range(4):
-    for j in range(1):
-        count = 0
-        mylist = []
-        for item in df[7].iloc[i][j]:
-            if count >= 1:
-                mylist.append(item)
-            count += 1
-        df[7].iloc[i][j][1] = " ".join(mylist)
-
-        if count > 2:
-            for iter in range(count - 1, 1, -1):
-                df[7].iloc[i][j].pop(iter)
+df[7] = af.divide_string_column_into_list_column(df[7], 3)
 
 ## Dividing column with list of two strings into two columns
 df[7] = pd.DataFrame(df[7]["Tabela de Tipo de Solicitação"].to_list(), columns = subheader)
