@@ -8,3 +8,11 @@ The necessary Python modules can be successfully installed by typing the followi
 $   pip3 install -r requirements.txt
 ```
 <br />
+
+## Running the program
+After setting up all the requirements mentioned above, to run the Table Extractor you may access the root folder of this repository on a bash terminal and type in the following command:<br />
+<br />
+```
+$   python3 table-extractor.py
+```
+<br />
