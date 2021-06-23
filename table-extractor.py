@@ -3,7 +3,8 @@ from tabula import read_pdf
 import pandas as pd
 import numpy as np
 import re
-from csv_zipper import zip_this_folder
+import auxiliar_functions as af
+import csv_zipper as cz
 
 # 0. Setting Pandas printing options
 pd.options.display.max_colwidth = 100
@@ -69,6 +70,7 @@ for i in range(27):
             aux.iloc[i][j] = df[2].iloc[i-1][j]
 
 df[2] = aux
+#df[2] = af.drag_header_to_first_line(df[2], 27, 2, Q31_header)
 
 ## Creating auxiliar matrix for df[3]
 aux = pd.DataFrame(np.empty((27, 2), dtype = str), columns = Q31_header)
@@ -187,6 +189,4 @@ Q32_filename = "quadro32"
 Q32.to_csv(path_or_buf = Q32_filename + ".csv")
 
 # 8. Zipping all .csv files
-zip_this_folder(path = os.path.abspath(os.getcwd()))
-
-#ZipFile(Q30_filename + ".zip", "w").write(Q30_filename + ".csv")
+cz.zip_this_folder(path = os.path.abspath(os.getcwd()))
