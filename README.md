@@ -11,6 +11,14 @@ $   pip3 install -r requirements.txt
 ```
 <br />
 
+**INFO:** In case of getting a ***ModuleNotFound*** error related with **tabula-py**, please reinstall *tabula* manually, typing in the following:<br />
+<br />
+
+```
+$   pip3 install tabula-py
+```
+<br />
+
 ## Running the program
 After setting up all the requirements mentioned above, to run the Table Extractor you may access the root folder of this repository on a bash terminal and type in the following command:<br />
 <br />

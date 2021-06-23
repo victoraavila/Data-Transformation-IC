@@ -38,7 +38,7 @@ print(Q30, "\n")
 
 # 3. Saving Quadro 30 as a .csv file
 Q30_filename = "quadro30"
-Q30.to_csv(path_or_buf = Q30_filename + ".csv")
+Q30.to_csv(path_or_buf = Q30_filename + ".csv", encoding='utf-8-sig')
 
 # 4. Organizing Quadro 31
 ## Creating MultiIndex
@@ -91,7 +91,7 @@ print(Q31, "\n")
 
 # 5. Saving Quadro 31 as a .csv file
 Q31_filename = "quadro31"
-Q31.to_csv(path_or_buf = Q31_filename + ".csv")
+Q31.to_csv(path_or_buf = Q31_filename + ".csv", encoding='utf-8-sig')
 
 # 6. Organizing Quadro 32
 ## Creating MultiIndex
@@ -115,7 +115,7 @@ print(Q32, "\n")
 
 # 7. Saving Quadro 32 as a .csv file
 Q32_filename = "quadro32"
-Q32.to_csv(path_or_buf = Q32_filename + ".csv")
+Q32.to_csv(path_or_buf = Q32_filename + ".csv", encoding='utf-8-sig')
 
 # 8. Zipping all .csv files
 cz.zip_this_folder(path = os.path.abspath(os.getcwd()))
